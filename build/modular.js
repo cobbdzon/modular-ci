@@ -20,7 +20,7 @@ for (let i = 0; i < scanForIncludes.length; i++) {
     readFile(html_filepath).catch(console.error).then((data) => {
         // Transform data Buffer to string.
         const raw_html = data.toString();
-        new_html = raw_html
+        let new_html = raw_html
     
         const includes_matches = raw_html.match(includes_regex);
     
