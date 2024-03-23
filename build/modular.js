@@ -16,6 +16,7 @@ const includes_cache = {}
 for (let i = 0; i < scanForIncludes.length; i++) {
     const html_filepath = scanForIncludes[i];
 
+    console.log("Build: " + html_filepath + " initializing")
     readFile(html_filepath).catch(console.error).then((data) => {
         // Transform data Buffer to string.
         const raw_html = data.toString();
@@ -54,6 +55,7 @@ for (let i = 0; i < scanForIncludes.length; i++) {
     
         // html has been injected
         Promise.allSettled(promises).then(() => {
+            console.log("Build: " + html_filepath + " success!")
             writeFile(html_filepath, new_html)
         })
     })
