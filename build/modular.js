@@ -19,6 +19,8 @@ readFile("./index.html").catch(console.error).then((data) => {
         filenames[index] = str.slice(2, -2)
     })
 
+    new_html = new_html.replace(dev_script_regex, "")
+
     const element_data_cache = {}
     const promises = []
 
@@ -44,7 +46,6 @@ readFile("./index.html").catch(console.error).then((data) => {
 
     // html has been injected
     Promise.allSettled(promises).then(() => {
-        new_html = new_html.replace(dev_script_regex, "")
         writeFile("./index.html", new_html)
     })
 })
