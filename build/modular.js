@@ -4,7 +4,7 @@ const { promisify } = require('util');
 const config = require("./config.json")
 const scanForIncludes = config.scanForIncludes
 
-const includes_regex = /\[\[(.*?)\]\]/g;
+const includes_regex = /\[\{(.*?)\}\]/g;
 const dev_script_regex = /<script src=".*modularDev\.js"><\/script>/g
 
 const readFile = promisify(fs.readFile)

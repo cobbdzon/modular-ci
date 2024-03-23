@@ -1,4 +1,4 @@
-const includes_regex = /\[\[(.*?)\]\]/g;
+const includes_regex = /\[\{(.*?)\}\]/g;
 
 document.addEventListener("DOMContentLoaded", () => {
     const body = document.body;
@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         filenames[index] = str.slice(2, -2)
     });
 
-    const element_data_cache = {}
     const promises = []
 
     let i = 0
@@ -18,15 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const replace_pattern = includes_matches[i];
         const filename = filenames[i];
 
-        if (element_data_cache[filename]) {
-            const element_data = element_data_cache[filename]
+        if (sessionStorage.getItem(filename)) {
+            const element_data = sessionStorage.getItem(filename)
             body.innerHTML = body.innerHTML.replace(replace_pattern, element_data)
         } else {
             const response = await fetch('/includes/' + filename)
 
             if (response.ok) {
                 const element_data = await response.text()
-                element_data_cache[filename] = element_data
+                sessionStorage.setItem(filename, element_data)
                 body.innerHTML = body.innerHTML.replace(replace_pattern, element_data)
                 console.log("farted")
             } else {
