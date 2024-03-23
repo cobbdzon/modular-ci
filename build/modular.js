@@ -10,7 +10,7 @@ const dev_script_regex = /<script src=".*modularDev\.js"><\/script>/g
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
-// includes static, lets lazy cache them
+// includes are static, lets lazy cache them
 const includes_cache = {}
 
 for (let i = 0; i < scanForIncludes.length; i++) {
@@ -45,7 +45,8 @@ for (let i = 0; i < scanForIncludes.length; i++) {
                 })
             } else {
                 promises[i] = readFile('./includes/' + filename).then((data) => {
-                    element_data = data.toString()
+                    const element_data = data.toString()
+                    includes_cache[filename] = element_data
                     new_html = new_html.replace(replace_pattern, element_data)
                 }).catch(() => {
                     new_html = new_html.replace(replace_pattern, "Failed to load: " + filename)
