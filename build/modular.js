@@ -45,6 +45,6 @@ readFile("./index.html").catch(console.error).then((data) => {
     // html has been injected
     Promise.allSettled(promises).then(() => {
         new_html = new_html.replace(dev_script_regex, "")
-        writeFile("./index2.html", new_html)
+        writeFile("./index.html", new_html)
     })
 })
