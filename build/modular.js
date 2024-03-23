@@ -27,9 +27,10 @@ readFile("./index.html").catch(console.error).then((data) => {
         const filename = filenames[i];
 
         if (element_data_cache[filename]) {
-            promises[i] = new Promise(() => {
+            promises[i] = new Promise((resolve) => {
                 const element_data = element_data_cache[filename]
                 new_html = new_html.replace(replace_pattern, element_data)
+                resolve()
             })
         } else {
             promises[i] = readFile('./includes/' + filename).then((data) => {
@@ -43,6 +44,7 @@ readFile("./index.html").catch(console.error).then((data) => {
 
     // html has been injected
     Promise.allSettled(promises).then(() => {
+        new_html = new_html.replace(dev_script_regex, "")
         writeFile("./index2.html", new_html)
     })
 })
